@@ -7,7 +7,9 @@
 :root {
     --background-color: #ffff;
     --header-footer-background-color: #2F303A;
+    --images-overlay-background: rgba(47, 48, 58, 0.8);
     --hover-color: #2196F3;
+    --overlay-filter-color: rgba(33, 150, 243, 0.9);
     --button-hover-color: #188CE8;
     --headings-color: #212121;
     --button-and-logo-color: #2196F3;
@@ -23,7 +25,9 @@
     --card-border-color: #EEEEEE;
     --icon-background-color: #F5F4FA;
     --thumb-border-color: #AFB1B8;
-
+    --close-button-border: rgba(0, 0, 0, 0.1);
+    --backdrop-overlay-color: rgba(0, 0, 0, 0.2);
+    
 }
 
 ul{
@@ -53,6 +57,83 @@ img{
     padding-bottom: 94px;
 }
 
+.backdrop.is-hidden{
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal{
+    position: fixed;
+    top: auto;
+    left: auto;
+    width: 528px;
+    height: 581px;
+    background-color: var(--white-color);
+    border-radius: 4px;
+}f
+
+.backdrop{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--backdrop-overlay-color);
+    opacity: 1;
+    visibility: visible;
+    transition: transform 250ms;
+    transform: translate(-50% -50%);
+}
+
+.close-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--close-button-border);
+    background-color: transparent;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: var(--logo-black-color);
+    transition-property: transform;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
+}
+
+.close-button:hover{
+    background-color: var(--button-hover-color);
+    color: var(--white-color); 
+    transform: scale(1.1);
+}
+
+.close-button:focus {
+    background-color: var(--button-hover-color);
+    color: var(--white-color);
+    transform: scale(1.1);
+}
+
+.close-icon{
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.close-icon:hover{
+    fill: currentColor;
+}
+
+.close-icon:focus {
+    fill: currentColor;
+}
+
 .header{
     border-bottom: 1px solid var(--header-border-color);
 }
@@ -67,6 +148,21 @@ img{
 
 nav{
     display: flex;  
+}
+
+.link.current{
+    color: var(--hover-color);
+    position: relative;
+}
+
+.link.current::after{
+    content: "";
+    position: absolute;
+    bottom: -35px;
+    left: 0;
+    width: 100%;
+    border-bottom: 4px solid var(--button-and-logo-color);
+    border-radius: 2px;
 }
 
 .links-list{
@@ -162,7 +258,18 @@ body{
     line-height: 1.19;
     letter-spacing: 0.03em;
     margin-right: 93px;
-    
+    transition-property: transform;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;   
+}
+
+.logo-link:hover{
+    transform: scale(1.05);
+}
+
+.logo-link:focus {
+    transform: scale(1.05);
 }
 
 .link {
@@ -196,14 +303,20 @@ body{
     line-height: 1.14; 
     display: flex;
     align-items: center; 
+    transition-property: transform, color;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
 }
 
 .mail-link:hover{
     color: var(--hover-color);
+    transform: translateY(-10%);
 }
 
 .mail-link:focus {
     color: var(--hover-color);
+    transform: translateY(-10%);
 }
 
 .call-link {
@@ -215,14 +328,21 @@ body{
     line-height: 1.14;   
     display: flex;
     align-items: center; 
+    transition-property: transform,
+    color;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
 }
 
 .call-link:hover {
     color: var(--hover-color);
+    transform: translateY(-10%);
 }
 
 .call-link:focus {
     color: var(--hover-color);
+    transform: translateY(-10%);
 }
 
 .main{
@@ -264,10 +384,20 @@ body{
     margin: 30px auto 0;
     padding: 10px 32px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+    transition-property: transform, background-color;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
 }
 
 .button-offer:hover {
     background-color: var(--button-hover-color);
+    transform: scale(1.05);
+}
+
+.button-offer:focus {
+    background-color: var(--button-hover-color);
+    transform: scale(1.05);
 }
 
 .button-offer:active{
@@ -352,6 +482,29 @@ body{
 
 .images-list{
     display: flex;
+}
+
+.images-card{
+    position: relative;
+}
+
+.images-overlay{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    background-color: var(--images-overlay-background);
+    padding: 27px 82px;
+}
+
+.images-overlay-heading{
+    color: var(--white-color);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.14;
+    text-align: center;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
 }
 
 .images-list>.list-item:not(:last-child){
@@ -439,16 +592,22 @@ body{
     justify-content: center;
     align-items: center;
     color: var(--thumb-border-color);
+    transition-property: background-color, transform, color;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
 }
 
 .team-socials-link:hover{
     background-color: var(--hover-color);
+    transform:scale(1.25);
     color: var(--white-color);
     fill: currentColor;
 }
 
 .team-socials-link:focus {
     background-color: var(--hover-color);
+    transform: scale(1.25);
     color: var(--white-color);
     fill: currentColor;
 }
@@ -488,17 +647,22 @@ body{
     border: 1px solid var(--thumb-border-color);
     color: var(--thumb-border-color);
     border-radius: 4px;
-    
+    transition-property: background-color, transform, color;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
 }
 
 .clients-thumb:hover{
     border-color: var(--hover-color);
     color: var(--hover-color);
+    transform:scale(1.15);
 }
 
 .clients-thumb:focus {
     border-color: var(--hover-color);
     color: var(--hover-color);
+    transform: scale(1.15);
 }
 
 .logo-link-footer{
@@ -611,14 +775,20 @@ body{
     justify-content: center;
     align-items: center;
     background-color: var(--ten-percent-white-color);
+    transition-property: background-color, transform;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
 }
 
 .footer-socials-link:hover{
     background-color: var(--hover-color);
+    transform: scale(1.25);
 }
 
 .footer-socials-link:focus {
     background-color: var(--hover-color);
+    transform: scale(1.25);
 }
 
 .filter-button-list{
@@ -644,6 +814,10 @@ body{
     text-align: center;
     letter-spacing: 0.03em;
     cursor: pointer;
+    transition-property: background-color, transform, color, box-shadow;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0;
 }
 
 .filter-button:hover {
@@ -652,6 +826,7 @@ body{
     box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1),
                 0 1px 2px rgba(0, 0, 0, 0.08),
                 0 2px 2px rgba(0, 0, 0, 0.12);
+    transform:translateY(-10%);
 }
 
 .filter-button:focus {
@@ -660,6 +835,7 @@ body{
     box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1),
                 0 1px 2px rgba(0, 0, 0, 0.08),
                 0 2px 2px rgba(0, 0, 0, 0.12);
+    transform:translateY(-10%);
 }
 
 .filter-button:active{
@@ -668,6 +844,38 @@ body{
     box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1),
                 0 1px 2px rgba(0, 0, 0, 0.08),
                 0 2px 2px rgba(0, 0, 0, 0.12);
+}
+
+.filter-image{
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-link:hover .filter-overlay{
+    transform: translateY(0);
+}
+
+.filter-link:focus .filter-overlay {
+    transform: translateY(0);
+}
+
+.filter-overlay{
+    background-color: var(--overlay-filter-color);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateY(101%);
+    transition: transform 250ms;
+    padding: 63px 24px;
+}
+
+.filter-overlay-text{
+    color: var(--white-color);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.56;
+    letter-spacing: 0.03em;
 }
 
 .card-heading{
